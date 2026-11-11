@@ -13,6 +13,7 @@ Working notes for building and maintaining the SnakeSquad Valheim mods with Clau
 - Read only the parts for the mod you are working on.
 - After changing a mod, add what changed and what you learned to its section.
 - Findings from decompiled game code go in a `docs/game/` topic file: names, signatures, key fields and gotchas, with only the few lines that matter quoted. No raw dumps.
+- Refer to the mods' author as SAT. Never write anyone's real name in these notes.
 - Never put credentials, tokens or private addresses in these notes. This repository is public.
 
 These notes were kept in the SnakeWood repository until 2026-11-11.
