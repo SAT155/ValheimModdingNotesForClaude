@@ -38,7 +38,11 @@
 - Storm strikes (`StormStrike` in SurfBolts.cs) whited out the screen; now smaller with capped lights. Moder's breath and Yagluth's blast still wash out the view.
 - A Lox that hits fills the camera. The stage menu tiles look crooked. Dungeons show black above the walls.
 - `Plugin.BuildVersion` gives the real release number (CI seds `BuildNumber` in Plugin.cs before compiling).
-- Latest release: v1.16.178, SnakewaySurfer branch `claude/project-thread-8ph0gw` (PR #6).
+- Second run (v1.16.178): hits fell from 63 to 16 and none came from Eikthyr, Bonemass or the Queen, so marker reading works. Lightning no longer whites out the screen and the drawn Hugin reads clearly.
+- The game log had no raven portrait lines at all: `RavenUi.Portrait` left silently because `Pictures.MeshBounds` found no active, enabled mesh. Likely cause: `RavenTemplate()` copies `Raven.m_visual` while Hugin is hidden. v1.16.183 switches the copy's renderers and their parents on and logs "Hugin's model: N meshes, M parts were switched off". Check that line in the next log; if M is 0 the cause is something else.
+- A Plains start begins with the ocean crossing unless `Progress.Landed`; the tour now skips that (`Touring` in SurfBoss.cs).
+- Still open from the hit list: a Blob (hurdle, gas3) hit a player 1.0 m up in a jump with no marker on the lane.
+- Latest release: v1.16.183 (was v1.16.178), SnakewaySurfer branch `claude/project-thread-8ph0gw` (PR #6).
 
 ## Open bugs and owed items
 - **Crash to desktop:** cause unknown. It happened on a retry in the Plains on v1.16.88 or older, and the log has no exception. SAT still owes the newest folder from `%userprofile%\AppData\LocalLow\IronGate\Valheim\Crashes`. v1.16.93 moved the ripple's `Camera.Render` out of OnGUI on a hunch.
