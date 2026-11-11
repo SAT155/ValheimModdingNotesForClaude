@@ -42,7 +42,15 @@
 - The game log had no raven portrait lines at all: `RavenUi.Portrait` left silently because `Pictures.MeshBounds` found no active, enabled mesh. Likely cause: `RavenTemplate()` copies `Raven.m_visual` while Hugin is hidden. v1.16.183 switches the copy's renderers and their parents on and logs "Hugin's model: N meshes, M parts were switched off". Check that line in the next log; if M is 0 the cause is something else.
 - A Plains start begins with the ocean crossing unless `Progress.Landed`; the tour now skips that (`Touring` in SurfBoss.cs).
 - Still open from the hit list: a Blob (hurdle, gas3) hit a player 1.0 m up in a jump with no marker on the lane.
-- Latest release: v1.16.183 (was v1.16.178), SnakewaySurfer branch `claude/project-thread-8ph0gw` (PR #6).
+- Latest release: v1.16.189 (was v1.16.183), SnakewaySurfer branch `claude/project-thread-8ph0gw` (PR #6).
+
+### 1.16.189: biomes truer to the game (owner feedback: dungeons and biomes looked nothing like the game)
+
+- Scenery now comes from `ZoneSystem.instance.m_vegetation` (SurfVegetation.cs): entries for the biome, weighted by count times group size, density worked out from the per-zone counts. Logs "<biome> vegetation from the game: ...". Setting: Game Vegetation.
+- Mist (SurfMist.cs): a copy of the game's `ParticleMist` particle system with its script removed, emitted by hand with `ps.Emit(params, 1)` on the verges and far ahead. Logs "Mist borrowed from the game". Unverified in game.
+- Ambience (SurfAmbience.cs): `EnvSetup.m_ambientLoop` of the biome's main weather on an own 2D source, random clips from `AudioMan.m_randomAmbients` matching the biome, and far creature calls (`sfx_gjall_idle_vocals` and friends; names for other biomes are guesses, the first that exists is played). Logs "<biome> ambience: ...".
+- `surfkit` console command (SurfKit.cs): pictures every real dungeon room (plan and two inside views, parts list in rooms.txt) from `DungeonDB.GetRooms()`, then teleports the player to each biome's terrain spot (god and ghost mode on, midday forced with `EnvMan.m_debugTimeOfDay`), takes four screenshots and counts every ZNetView within 64 m into biomes.txt, then brings the player back. Output in BepInEx/SnakewaySurferTest/kit_<time>/.
+- Next: when the kit folder comes back, rebuild the dungeons from the real room parts (roof, camera height) and tune vegetation against the census. Mistlands ground texture still to be checked against the pictures.
 
 ## Open bugs and owed items
 - **Crash to desktop:** cause unknown. It happened on a retry in the Plains on v1.16.88 or older, and the log has no exception. SAT still owes the newest folder from `%userprofile%\AppData\LocalLow\IronGate\Valheim\Crashes`. v1.16.93 moved the ripple's `Camera.Render` out of OnGUI on a hunch.
