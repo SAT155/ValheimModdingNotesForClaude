@@ -28,6 +28,18 @@
 - Every hit is in the BepInEx log as `Hit: ...`.
 - Review and plan: https://claude.ai/artifact/Sa48CY9QvnaGMexzBYf9tn. Work lives on branch `claude/project-thread-8ph0gw` (PR #6, stacked on #5).
 
+### What the first self-test run taught (2026-11-11, v1.16.171 run, fixes in v1.16.178)
+
+- The tour works: 18 stops, 134 screenshots, no exceptions. Build contact sheets (12 per sheet) to read them cheaply.
+- Attack zones (gas clouds, sweeps, boss strikes) are `Thing`s with `Threat`, `Life > 0` and no `Info`. They are warned by lane markers, so they are not "late appearances"; 1.16.178 stops counting them.
+- Every lane marker now registers in `m_markerNotes` (`NoteMarker` from `MakeMarker`). The autopilot reads markers like a player (leave red, roll under blue, jump when all three are red) and parries duel swings (`m_duelLand`, `m_botBlock`). Each `Hit:` line says how long the player's lane had been marked, or "no marker on your lane": that phrase is the unfair-hit signal to look for.
+- Hits that bypass `m_things` (boss chase strikes, duel swings, Yagluth's beam, sea rocks) show "in view for ?".
+- The autopilot still cannot steer at sea, play the Elder's maze, hold a totem for Yagluth, or predict hares and deer that change lane.
+- Storm strikes (`StormStrike` in SurfBolts.cs) whited out the screen; now smaller with capped lights. Moder's breath and Yagluth's blast still wash out the view.
+- A Lox that hits fills the camera. The stage menu tiles look crooked. Dungeons show black above the walls.
+- `Plugin.BuildVersion` gives the real release number (CI seds `BuildNumber` in Plugin.cs before compiling).
+- Latest release: v1.16.178, SnakewaySurfer branch `claude/project-thread-8ph0gw` (PR #6).
+
 ## Open bugs and owed items
 - **Crash to desktop:** cause unknown. It happened on a retry in the Plains on v1.16.88 or older, and the log has no exception. SAT still owes the newest folder from `%userprofile%\AppData\LocalLow\IronGate\Valheim\Crashes`. v1.16.93 moved the ripple's `Camera.Render` out of OnGUI on a hunch.
 - **Untested in game:**
