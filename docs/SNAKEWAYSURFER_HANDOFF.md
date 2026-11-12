@@ -42,7 +42,7 @@
 - The game log had no raven portrait lines at all: `RavenUi.Portrait` left silently because `Pictures.MeshBounds` found no active, enabled mesh. Likely cause: `RavenTemplate()` copies `Raven.m_visual` while Hugin is hidden. v1.16.183 switches the copy's renderers and their parents on and logs "Hugin's model: N meshes, M parts were switched off". Check that line in the next log; if M is 0 the cause is something else.
 - A Plains start begins with the ocean crossing unless `Progress.Landed`; the tour now skips that (`Touring` in SurfBoss.cs).
 - Still open from the hit list: a Blob (hurdle, gas3) hit a player 1.0 m up in a jump with no marker on the lane.
-- Latest release: v1.16.196 (was v1.16.189, v1.16.183), SnakewaySurfer branch `claude/project-thread-8ph0gw` (PR #6).
+- Latest release: v1.16.216 (was v1.16.196) (was v1.16.189, v1.16.183), SnakewaySurfer branch `claude/project-thread-8ph0gw` (PR #6).
 
 ### 1.16.189: biomes truer to the game (owner feedback: dungeons and biomes looked nothing like the game)
 
@@ -106,3 +106,14 @@
 - Settings: Fair Placement, Fair Warning.
 - The cloud container can get a compiler with `apt-get update && apt-get install -y dotnet-sdk-8.0`, enough for Unity-free code and its checks; the mod itself still compiles only in CI.
 - Plan and mind map: run loop in the middle; content tables, placement, attack records, modes, screen layout, look and sound, feedback tools, game bridge; a run builder (hand-made curated runs, about one biome long) is planned on top.
+
+### 1.16.210 and 1.16.216: what the first run on the new builds showed (latest release v1.16.216)
+
+- Lightning and thunder that carried on in the real world after a run: the boss weather's particle systems are instantiated onto the game's own camera and were only cleared when the weather faded, never when the run object was destroyed. `ClearWeather()` is now called from `OnDestroy`. Lesson: anything parented to a game object the mod doesn't own must be cleaned in `OnDestroy`.
+- "Missing prefab hash" spam (32,000 lines in one session) was `piece_surf_strangeportal`: an old ZDO saved under the mod's own prefab name, in a game where that prefab never registered. `SurfPortalPiece.Sweep()` (every 20 s) rewrites such ZDOs to `portal_wood` plus the flag when `ZNetScene.GetPrefab(hash)` is null. Why the piece doesn't register for the owner is still unknown; the log line "Strange Portal: no wooden portal among the game's N prefabs" will say if the copy source is missing.
+- `Stable hash` of a name can be computed offline to identify a missing prefab hash (the C# string hash with 5381 seeds and 1566083941 multiplier).
+- surfkit results: biomes.txt census is good data (things within 64 m by prefab name). The vegetation table over-counts (Black Forest table 826 a zone, counted 229); `SurfCensus.cs` holds the counts and sets mix and density. Mistlands pictures are black (mist, no wisp light): next time switch the mist off for the shots. Room interior shots are often taken from inside a mesh; the parts lists are the useful part.
+- Burial chamber rooms are not built of named pieces: groups "Walls", "Roof", "Floor" hold single stone meshes (material `stonewall`, floor `stonekit_floor_2x2`). `LoadRooms` keeps the first good stone of each as `<theme>_Walls1`, `_Roof1`, `_Floor1`.
+- The Mistlands have no `m_ambientLoop` on their main weather and no entries in `AudioMan.m_randomAmbients`.
+- The raven's animator switches its model off again after `Rebind`/`Update`; renderers are re-enabled after the animation is applied (unverified).
+- Neither the placement gate nor the fair-warning guard fired in a full tour.
