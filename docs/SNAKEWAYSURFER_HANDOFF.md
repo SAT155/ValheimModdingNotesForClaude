@@ -42,7 +42,7 @@
 - The game log had no raven portrait lines at all: `RavenUi.Portrait` left silently because `Pictures.MeshBounds` found no active, enabled mesh. Likely cause: `RavenTemplate()` copies `Raven.m_visual` while Hugin is hidden. v1.16.183 switches the copy's renderers and their parents on and logs "Hugin's model: N meshes, M parts were switched off". Check that line in the next log; if M is 0 the cause is something else.
 - A Plains start begins with the ocean crossing unless `Progress.Landed`; the tour now skips that (`Touring` in SurfBoss.cs).
 - Still open from the hit list: a Blob (hurdle, gas3) hit a player 1.0 m up in a jump with no marker on the lane.
-- Latest release: v1.16.189 (was v1.16.183), SnakewaySurfer branch `claude/project-thread-8ph0gw` (PR #6).
+- Latest release: v1.16.196 (was v1.16.189, v1.16.183), SnakewaySurfer branch `claude/project-thread-8ph0gw` (PR #6).
 
 ### 1.16.189: biomes truer to the game (owner feedback: dungeons and biomes looked nothing like the game)
 
@@ -97,3 +97,12 @@
   - Don't copy other games.
   - SAT runs Valheim Plus.
 - **SAT's log:** it may not include our Info lines if it was taken at a lower log level. Ask for LogOutput.log from BepInEx.
+
+### 1.16.196: architecture, first pieces (owner chose architecture work over small fixes)
+
+- `SurfPlacement.cs` is Unity-free: slots (lane, from, to, need = Jump/Roll/Either/Wall) and `Passable(pace)`, a step-by-step search of what a runner can do within the game's jump, roll, cooldown and lane-change limits. `SnakewaySurfer.Tests` (net8 console) compiles the same file and checks it against hand-made cases and a simulated player on random tracks; the Build workflow runs it first ("Rule checks"). The checks caught a real bug (thin overlaps slipping between steps).
+- `SurfGate.cs`: after each `SpawnRow`, the record is rebuilt from `m_things` and new things that close the track are destroyed, nearest the trouble first. Logs "Placement: took out ...". Only standing positions are known; moving creatures are recorded where they wait.
+- `SurfStrike.cs`: in `Hit()`, an attack (`Threat` or `Life > 0`, labelled) is forgiven unless a marker lay on the runner's lane, or the visible attack was in view, for 0.4 s. Logs "Unwarned: ...", also into the self-test report. Next step: give each logged offender a declared warning.
+- Settings: Fair Placement, Fair Warning.
+- The cloud container can get a compiler with `apt-get update && apt-get install -y dotnet-sdk-8.0`, enough for Unity-free code and its checks; the mod itself still compiles only in CI.
+- Plan and mind map: run loop in the middle; content tables, placement, attack records, modes, screen layout, look and sound, feedback tools, game bridge; a run builder (hand-made curated runs, about one biome long) is planned on top.
