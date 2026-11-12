@@ -42,7 +42,7 @@
 - The game log had no raven portrait lines at all: `RavenUi.Portrait` left silently because `Pictures.MeshBounds` found no active, enabled mesh. Likely cause: `RavenTemplate()` copies `Raven.m_visual` while Hugin is hidden. v1.16.183 switches the copy's renderers and their parents on and logs "Hugin's model: N meshes, M parts were switched off". Check that line in the next log; if M is 0 the cause is something else.
 - A Plains start begins with the ocean crossing unless `Progress.Landed`; the tour now skips that (`Touring` in SurfBoss.cs).
 - Still open from the hit list: a Blob (hurdle, gas3) hit a player 1.0 m up in a jump with no marker on the lane.
-- Latest release: v1.16.216 (was v1.16.196) (was v1.16.189, v1.16.183), SnakewaySurfer branch `claude/project-thread-8ph0gw` (PR #6).
+- Latest release: v1.16.225 (was v1.16.216, v1.16.196) (was v1.16.189, v1.16.183), SnakewaySurfer branch `claude/project-thread-8ph0gw` (PR #6).
 
 ### 1.16.189: biomes truer to the game (owner feedback: dungeons and biomes looked nothing like the game)
 
@@ -117,3 +117,10 @@
 - The Mistlands have no `m_ambientLoop` on their main weather and no entries in `AudioMan.m_randomAmbients`.
 - The raven's animator switches its model off again after `Rebind`/`Update`; renderers are re-enabled after the animation is applied (unverified).
 - Neither the placement gate nor the fair-warning guard fired in a full tour.
+
+### 1.16.225: Mistlands storm and dungeon roofs (unseen in game at the time of writing)
+
+- Mistlands storm: `UpdateMistStorm` in `SurfMist.cs` borrows the particle systems of the game's "Mistlands_thunder" weather (fallback "Queen") onto the run camera during open Mistlands stretches, not in dungeons or boss fights. `ClearMistStorm` runs in `OnDestroy`, because copies parented to the game camera otherwise outlive the run. Setting: Mistlands Storm. The log says "Mistlands storm: N effects borrowed ...".
+- Roofs: the owner chose "roof on, camera lowered". `CryptRoof` in `SurfCryptPlus.cs` tiles a roof at `WallH + RoofLift` over hall legs and pockets (open for the first and last 6 m of a leg), from `CryptTheme.Roofs` with the floor pieces as fallback. `PlaceCryptCamera` caps the camera height under the roof. Setting: Dungeon Roof.
+- Next: real walls and floors for the frost cave and infested mine; switch the mist off for Mistlands pictures in `surfkit`.
+
