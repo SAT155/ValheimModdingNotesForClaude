@@ -24,7 +24,8 @@ Several repos use a `claude/project-thread-*` branch as their default or latest 
 
 ## Notes workflow
 
-- Notes live on `main` in this repo. Start notes work on a new branch from `main` and open a PR into `main`.
+- Notes live on `main` in this repo. Start notes work on a new branch from `main`, open a PR into `main`, and merge it yourself once it's pushed.
+- **Merging:** SAT doesn't review PRs (2026-11-13). Claude merges its own PRs in this notes repo and in all the SnakeSquad mod repos once the work is done and CI passes. Still never publish to Thunderstore.
 - Read the notes before starting work. Whenever you change a mod repo (a merged PR or pushed work), update the relevant notes here with what changed and what you learned.
 - Old notes copies in the SnakeWood repo are frozen. Do not edit them.
 - Ordering: if several sessions have made changes since the notes were last updated, update the notes one at a time, earliest change first. Pull the latest `main` before editing.
