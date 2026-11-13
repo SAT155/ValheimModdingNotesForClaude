@@ -4,6 +4,8 @@ Working notes for building and maintaining the SnakeSquad Valheim mods with Clau
 
 ## Where to start
 
+- [`CLAUDE.md`](CLAUDE.md): standing instructions for Claude Code sessions (repos, release rules, notes index, current state per mod).
+
 - [`docs/VALHEIM_MODDING_NOTES_v1.40.md`](docs/VALHEIM_MODDING_NOTES_v1.40.md): the main notes. Sections 1 to 4 and 8 cover setup, CI, Harmony and working preferences; section 7 has one part per mod.
 - [`docs/game/`](docs/game/README.md): one small file per game system (attacks, terrain, mist, projectiles, audio and so on), with the class and method names that matter, their gotchas, and the game version they were read from.
 - [`docs/SNAKEWAYSURFER_HANDOFF.md`](docs/SNAKEWAYSURFER_HANDOFF.md): a short handoff for the SnakewaySurfer mod.
