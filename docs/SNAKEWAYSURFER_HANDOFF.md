@@ -18,7 +18,7 @@
   - CS0535: a missing interface member. Hoverable needs `GetHoverOffset`.
 - After each release:
   - Add a changelog line to `thunderstore/SnakewaySurfer/README.md` under "Changelog (spoilers)".
-  - Add a notes bullet to `docs/VALHEIM_MODDING_NOTES_v1.40.md` (section 7g, before "## 8.").
+  - Add a notes bullet to `docs/VALHEIM_MODDING_NOTES_v1.41.md` (section 7g, before "## 8.").
   - Update memory in `snakewaysurfer.md` (keep it under 4 KB) and MEMORY.md.
   - Rename the thread to "SnakewaySurfer vX".
 - Pushing prints "repository moved". This is harmless.
