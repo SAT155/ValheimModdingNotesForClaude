@@ -25,7 +25,7 @@ Several repos use a `claude/project-thread-*` branch as their default or latest 
 ## Notes workflow
 
 - Notes live on `main` in this repo. Start notes work on a new branch from `main`, open a PR into `main`, and merge it yourself once it's pushed.
-- **Merging:** SAT doesn't review PRs (2026-11-13). Claude merges its own PRs in this notes repo and in all the SnakeSquad mod repos once the work is done and CI passes. Still never publish to Thunderstore.
+- **Merging:** SAT doesn't review PRs (2026-11-13). Claude merges its own PRs in this notes repo and in all the SnakeSquad mod repos once the work is done and CI passes. Publishing to Thunderstore is separate: only when SAT asks (see Builds and releases).
 - Read the notes before starting work. Whenever you change a mod repo (a merged PR or pushed work), update the relevant notes here with what changed and what you learned.
 - Old notes copies in the SnakeWood repo are frozen. Do not edit them.
 - Ordering: if several sessions have made changes since the notes were last updated, update the notes one at a time, earliest change first. Pull the latest `main` before editing.
@@ -54,7 +54,7 @@ Read only the files for your mod. N = `docs/VALHEIM_MODDING_NOTES_v1.41.md`, G =
 
 - Every mod repo uses SnakeWood-style GitHub releases: each push of mod changes builds in GitHub Actions and creates a release with the r2modman-ready Thunderstore zip attached directly, so SAT can download it and use "Import local mod" with no extract step.
 - Give each test build a unique version number (the patch number is usually the Actions run number). On some repos a non-default branch only releases when the Build workflow is dispatched on it.
-- **Never publish to Thunderstore.** SAT uploads there by hand when a version is ready.
+- **Thunderstore publishing (2026-11-13):** SnakeWood, SnakePolearms, SnakeTography (ValheimMapMarker repo), SnakewaySurfer and SnakeGravityHammer have a manual **Publish to Thunderstore** workflow (`.github/workflows/publish.yml`) on their default branch. It uploads an existing GitHub release's zip to the **SnakeSquad** team with the `TCLI_AUTH_TOKEN` repo secret (latest full release by default, or a `tag` input; ValheimMapMarker's recent releases are pre-releases, so pass the tag). Dispatch it only when SAT asks to publish a specific mod, never on your own. Tag uploads with every fitting Valheim category, including `ai-generated`. Never publish SnakeSkills, SnakeHammer or SnakeSmarterHoe (no licence for the code they are built on).
 - Repos are public so Actions minutes are free. If CI is refused for billing, the repo is probably still private: ask SAT to make it public.
 
 ## Rules for every mod
@@ -62,7 +62,7 @@ Read only the files for your mod. N = `docs/VALHEIM_MODDING_NOTES_v1.41.md`, G =
 - **Vanilla-client safe:** some players on the server run no mods. A mod must never leave custom networked prefabs in the world that vanilla clients cannot load ("Missing prefab hash" spam). Prefer vanilla prefabs, or save custom pieces as a vanilla equivalent.
 - **Valheim Plus:** the server runs Valheim Plus (building grid, Advanced Building/Editing modes; SAT's config has "no invalid placement" on). Mods must work with V+ on or off.
 - **Public-facing package text:** changelogs, Thunderstore READMEs and manifests are written for players. No names, no internal notes, no talk of threads or test builds. Every Thunderstore README ends with a Feedback section using the feedback address already in the existing READMEs, and its feature list ends with a mod-specific joke that the mod can't let you dual wield spears.
-- **Licences:** SAT's own mods (SnakeWood, SnakePolearms, SnakeTography, SnakewaySurfer, SnakeGravityHammer) are GPL-3.0, and new original mods should be too. SnakeHammer, SnakeSmarterHoe and SnakeSkills derive from third-party mods without an open licence: leave them unlicensed, and never upload SnakeSkills builds to Thunderstore.
+- **Licences:** SAT's own mods (SnakeWood, SnakePolearms, SnakeTography, SnakewaySurfer, SnakeGravityHammer) are GPL-3.0, and new original mods should be too. SnakeHammer, SnakeSmarterHoe and SnakeSkills derive from third-party mods without an open licence: leave them unlicensed, and never upload them to Thunderstore.
 - **UI:** keep it simple. SAT prefers visual and audio cues over popup text.
 
 ## Current state per mod
