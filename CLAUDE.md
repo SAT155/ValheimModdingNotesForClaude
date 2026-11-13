@@ -32,7 +32,7 @@ Several repos use a `claude/project-thread-*` branch as their default or latest 
 
 ## Notes index
 
-Read only the files for your mod. N = `docs/VALHEIM_MODDING_NOTES_v1.40.md`, G = `docs/game/`. Update this index when the notes version changes.
+Read only the files for your mod. N = `docs/VALHEIM_MODDING_NOTES_v1.41.md`, G = `docs/game/`. Update this index when the notes version changes.
 
 | Work | Read |
 |---|---|
@@ -48,6 +48,8 @@ Read only the files for your mod. N = `docs/VALHEIM_MODDING_NOTES_v1.40.md`, G =
 | Other game systems | N §5, then G/README.md |
 
 ## Builds and releases
+
+- **Desktop sessions on SAT's PC** can compile locally: `tools\build-and-copy.ps1 -Mod <Mod>` builds against the game and the Thunderstore Mod Manager profile `2026`, and copies the DLL into that profile (`-NoCopy` to only compile, `-Restore` to put the release back). See N §2b. Stay inside the dev folder and never write to the Steam install.
 
 - Every mod repo uses SnakeWood-style GitHub releases: each push of mod changes builds in GitHub Actions and creates a release with the r2modman-ready Thunderstore zip attached directly, so SAT can download it and use "Import local mod" with no extract step.
 - Give each test build a unique version number (the patch number is usually the Actions run number). On some repos a non-default branch only releases when the Build workflow is dispatched on it.
