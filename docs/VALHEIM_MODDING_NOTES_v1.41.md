@@ -911,7 +911,7 @@ effects that have a `ZNetView`.
 Known open items: confirm the burst crash is gone; in-game test of the weapon version (attack animations from the cloned
 attacks, hand model position in the right hand, standing still while charging, default sounds).
 
-## 7f. SnakeSkills (SnakeSailing repo, 1.27.x)
+## 7f. SnakeSkills (SnakeSailing repo, 1.29.x)
 
 From the SnakeSkills session, 2026-10-29, [SAT155/SnakeSailing#2](https://github.com/SAT155/SnakeSailing/pull/2)
 (draft). The user asked to combine Sailing, Ranching and Mining into one mod and fix levels being
@@ -1238,8 +1238,22 @@ lost after starting the game unmodded once.
   appends a local `StatusEffect` (`ScriptableObject.CreateInstance`, `m_icon` = staff
   `GetIcon()`) to the list the HUD draws, so nothing touches SEMan or syncs. Existing configs keep
   their old 5 s value (BepInEx keeps saved values when a default changes).
+- **1.29** (2026-11-13, [SAT155/SnakeSailing#10](https://github.com/SAT155/SnakeSailing/pull/10),
+  merged into the default branch `claude/charming-noether-raq5zn` with the 1.25-1.28 stack): Sailing,
+  Ranching and Mining rewritten from a description of the behaviour, so SnakeSkills is all SAT's own
+  code; the smart hammer moved to its own plugin SnakeSmartHammer (`SnakeSmartHammer/`,
+  `com.snakesquad.snakesmarthammer`), which copies the `[Smart Hammer...` sections from
+  `com.snakesquad.snakeskills.cfg` on first start. New `SkillShare.cs`: player ZDO keys
+  `SnakeSkills <Skill>` and `SnakeSkills ExplosiveMining`, RPC `SnakeSkills RaiseSkill` (XP earned on
+  a machine that doesn't own the player). Ships keep the ZDO key `Sailing Skill Level` so older ships
+  still work. Ranching no longer reschedules `Procreation` and finds CLLC's `API.GetMaxLevel` by
+  reflection (no compile-time dependency). Gotcha: SkillManager's string overloads of
+  `GetSkillFactor`/`RaiseSkill` are extension methods and need `using SkillManager;` (CS1503
+  string → `Skills.SkillType` otherwise). Full detail in the
+  [SnakeSailing README](https://github.com/SAT155/SnakeSailing/blob/claude/charming-noether-raq5zn/README.md).
+  Untested in game.
 
-Known open items: never tested in-game (1.27 bubble autocast, 1.26 Dead Raiser menu and skeleton types, 1.20 decor icons/placement/V+ modes, 1.18 undo, decor plants and their icons, Shift rounding, 1.22 blueprint pictures, 1.24 materials panel and picture rig, 1.14 Ctrl incline and Alt ramp blueprints, Ember Blast 1.13, skill backup, fishing XP, Landscaping, earrings, fish yield, Restore terrain, Shift ramps, 1.5 slope ramps, 1.7 red flash, 1.8 edge-safe bumps and hoe wear, 1.9 skill limits; 1.10 FromFeet ramps, 1.11 click to feet, 1.12 raise ramps/no bench/stone); slope easing on
+Known open items: never tested in-game (1.29 rewritten Sailing/Ranching/Mining and SnakeSmartHammer split, 1.27 bubble autocast, 1.26 Dead Raiser menu and skeleton types, 1.20 decor icons/placement/V+ modes, 1.18 undo, decor plants and their icons, Shift rounding, 1.22 blueprint pictures, 1.24 materials panel and picture rig, 1.14 Ctrl incline and Alt ramp blueprints, Ember Blast 1.13, skill backup, fishing XP, Landscaping, earrings, fish yield, Restore terrain, Shift ramps, 1.5 slope ramps, 1.7 red flash, 1.8 edge-safe bumps and hoe wear, 1.9 skill limits; 1.10 FromFeet ramps, 1.11 click to feet, 1.12 raise ramps/no bench/stone); slope easing on
 level ground and big brushes may feel off; Deep North fish prefab names. Test: play with SnakeSkills, quit, start unmodded and
 join, quit, start with SnakeSkills; the log should say `Restored level`. The repo could be renamed
 SnakeSkills on GitHub if the user wants.
@@ -2051,3 +2065,4 @@ first). Built green in CI (release v1.0.2); **untested in-game**. Files in `Snak
 | 1.40 | 2026-11-10 22:50 | Claude Code, repos-going-public session | Added: §3 public repos and secrets (credentials out of release zips, unlicensed forks, public logs). Changed: §1 ValheimMapMarker credentials are shared privately, not packaged. |
 | 1.39.1 | 2026-11-10 22:10 | Claude Code, public changelogs session | Added: §8 changelogs and package text stay public facing. Merged the 2zimly notes (SnakewaySurfer 1.16.140) into the u27urh line. |
 | 1.41 | 2026-11-13 05:00 | Claude Code, local build setup session (SAT's PC) | Added: §2b desktop sessions on SAT's PC (dev folder layout, Valheim and Thunderstore Mod Manager profile `2026` paths, `tools/build-and-copy.ps1` with `-NoCopy`/`-Restore`, clone failures for non-public repos). |
+| 1.41.1 | 2026-11-13 05:40 | Claude Code, SnakeSkills 1.29 session | Added: §7f SnakeSkills 1.29 (Sailing/Ranching/Mining rewritten, `SkillShare.cs` ZDO keys and RPC, smart hammer split into SnakeSmartHammer, SkillManager `using` gotcha). Changed: CLAUDE.md licences, repo table and current state for SnakeSkills 1.29. |

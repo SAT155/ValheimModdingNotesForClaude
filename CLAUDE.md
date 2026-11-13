@@ -12,7 +12,8 @@ Clone the ones you need next to this repo:
 |---|---|
 | Modding notes (this repo) | https://github.com/SAT155/ValheimModdingNotesForClaude |
 | SnakeWood | https://github.com/SAT155/SnakeWood |
-| SnakeSkills (Sailing, Ranching, Mining, Landscaping hoe, smart hammer) | https://github.com/SAT155/SnakeSailing |
+| SnakeSkills (Sailing, Ranching, Mining, Landscaping hoe) | https://github.com/SAT155/SnakeSailing |
+| SnakeSmartHammer (SmartBuild fork, smart hammer) | https://github.com/SAT155/SnakeSailing (folder `SnakeSmartHammer/`) |
 | SnakeHammer (SmartBuild fork) | https://github.com/SAT155/SnakeHammer |
 | SnakeTography (North Wisp, map marker) | https://github.com/SAT155/ValheimMapMarker |
 | SnakeSmarterHoe (being phased out) | https://github.com/SAT155/SnakeSmarterHoe |
@@ -41,7 +42,7 @@ Read only the files for your mod. N = `docs/VALHEIM_MODDING_NOTES_v1.41.md`, G =
 | SnakeWood | N §7; G/build-menu-and-pieces, network-objects |
 | SnakeSmarterHoe / Landscaping hoe | N §7b; G/terrain-and-hoe |
 | SnakePolearms | N §7c; G/attacks-and-throws, blocking-and-left-hand |
-| SnakeHammer / smart hammer | N §7d, §7f; G/build-menu-and-pieces, hover-and-portal-triggers |
+| SnakeHammer / SnakeSmartHammer | N §7d, §7f; G/build-menu-and-pieces, hover-and-portal-triggers |
 | ValheimMapMarker (SnakeTography) | N §7e; G/world-progress-keys, locations-and-custom-items |
 | SnakeSkills (SnakeSailing repo) | N §7f; G/magic-costs-and-skills, staff-shield-and-combat-state, summons-and-dead-raiser, player-save-and-custom-skills, fishing, mist-and-demisters |
 | SnakewaySurfer | N §7g; G/player-anim-input-visuals, camera-weather-terrain-look, projectiles-and-rocks, audio-zsfx; handoff `docs/SNAKEWAYSURFER_HANDOFF.md` |
@@ -54,7 +55,7 @@ Read only the files for your mod. N = `docs/VALHEIM_MODDING_NOTES_v1.41.md`, G =
 
 - Every mod repo uses SnakeWood-style GitHub releases: each push of mod changes builds in GitHub Actions and creates a release with the r2modman-ready Thunderstore zip attached directly, so SAT can download it and use "Import local mod" with no extract step.
 - Give each test build a unique version number (the patch number is usually the Actions run number). On some repos a non-default branch only releases when the Build workflow is dispatched on it.
-- **Thunderstore publishing (2026-11-13):** SnakeWood, SnakePolearms, SnakeTography (ValheimMapMarker repo), SnakewaySurfer and SnakeGravityHammer have a manual **Publish to Thunderstore** workflow (`.github/workflows/publish.yml`) on their default branch. It uploads an existing GitHub release's zip to the **SnakeSquad** team with the `TCLI_AUTH_TOKEN` repo secret (latest full release by default, or a `tag` input; ValheimMapMarker's recent releases are pre-releases, so pass the tag). As of 2026-11-13 it is merged in SnakeWood, SnakewaySurfer and SnakeGravityHammer; the SnakePolearms and ValheimMapMarker PRs wait because those repos are still private and Actions is refused for billing there. Dispatch it only when SAT asks to publish a specific mod, never on your own. Tag uploads with every fitting Valheim category, including `ai-generated`. Never publish SnakeSkills, SnakeHammer or SnakeSmarterHoe (no licence for the code they are built on).
+- **Thunderstore publishing (2026-11-13):** SnakeWood, SnakePolearms, SnakeTography (ValheimMapMarker repo), SnakewaySurfer and SnakeGravityHammer have a manual **Publish to Thunderstore** workflow (`.github/workflows/publish.yml`) on their default branch. It uploads an existing GitHub release's zip to the **SnakeSquad** team with the `TCLI_AUTH_TOKEN` repo secret (latest full release by default, or a `tag` input; ValheimMapMarker's recent releases are pre-releases, so pass the tag). As of 2026-11-13 it is merged in SnakeWood, SnakewaySurfer and SnakeGravityHammer; the SnakePolearms and ValheimMapMarker PRs wait because those repos are still private and Actions is refused for billing there. Dispatch it only when SAT asks to publish a specific mod, never on your own; Claude never uploads anything to Thunderstore by itself. Tag uploads with every fitting Valheim category, including `ai-generated`. SnakeSkills is all SAT's own code since 1.29, so it may go on Thunderstore once SAT decides to (it has no Publish workflow yet). Never publish SnakeSmartHammer, SnakeHammer or SnakeSmarterHoe (no licence for the code they are built on).
 - Repos are public so Actions minutes are free. If CI is refused for billing, the repo is probably still private: ask SAT to make it public.
 
 ## Rules for every mod
@@ -62,14 +63,14 @@ Read only the files for your mod. N = `docs/VALHEIM_MODDING_NOTES_v1.41.md`, G =
 - **Vanilla-client safe:** some players on the server run no mods. A mod must never leave custom networked prefabs in the world that vanilla clients cannot load ("Missing prefab hash" spam). Prefer vanilla prefabs, or save custom pieces as a vanilla equivalent.
 - **Valheim Plus:** the server runs Valheim Plus (building grid, Advanced Building/Editing modes; SAT's config has "no invalid placement" on). Mods must work with V+ on or off.
 - **Public-facing package text:** changelogs, Thunderstore READMEs and manifests are written for players. No names, no internal notes, no talk of threads or test builds. Every Thunderstore README ends with a Feedback section using the feedback address already in the existing READMEs, and its feature list ends with a mod-specific joke that the mod can't let you dual wield spears.
-- **Licences:** SAT's own mods (SnakeWood, SnakePolearms, SnakeTography, SnakewaySurfer, SnakeGravityHammer) are GPL-3.0, and new original mods should be too. SnakeHammer, SnakeSmarterHoe and SnakeSkills derive from third-party mods without an open licence: leave them unlicensed, and never upload them to Thunderstore.
+- **Licences:** SAT's own mods (SnakeWood, SnakePolearms, SnakeTography, SnakewaySurfer, SnakeGravityHammer) are GPL-3.0, and new original mods should be too. SnakeSkills is SAT's own code since 1.29 (Sailing, Ranching and Mining rewritten from a description of the behaviour, smart hammer moved out), so it may go on Thunderstore when SAT decides. SnakeSmartHammer (SmartBuild fork), SnakeHammer and SnakeSmarterHoe derive from third-party mods without an open licence: leave them unlicensed, and never upload them to Thunderstore.
 - **UI:** keep it simple. SAT prefers visual and audio cues over popup text.
 
 ## Current state per mod
 
 - **SnakeWood:** latest v1.23.167 (logs and sled under Transportation via `m_usage`).
-- **SnakeSkills** (SnakeSailing repo): latest 1.28 (v1.28.108), branch `claude/project-thread-711mwk` (bubble shield autocast + HUD ready icon), stacked on 1.26 Dead Raiser and 1.25. Build further work on that branch as 1.29+. Keep skill names unchanged (skill ids are name hashes).
-- **Smart hammer:** lives in SnakeSkills (`SnakeSkills/SmartBuild/`) on the vanilla hammer, always on since 1.22 (config switch, Y opens the blueprint list with pictures; 1.23 added a Blueprints tab in the vanilla build menu). There is no separate Smart Hammer item. It disables itself while SmartBuild/SnakeHammer is installed. New hammer work goes here, not in the SnakeHammer repo.
+- **SnakeSkills** (SnakeSailing repo, now public): latest 1.29 (Sailing, Ranching and Mining rewritten; smart hammer split out), merged into the default branch `claude/charming-noether-raq5zn` via PR #10, which also brought in the 1.25-1.28 stack. Build further work on new branches from that default branch. 1.29 is untested in game. Keep skill names unchanged (skill ids are name hashes).
+- **Smart hammer:** since 1.29 its own plugin, SnakeSmartHammer (`com.snakesquad.snakesmarthammer`, `SnakeSailing/SnakeSmartHammer/`), on the vanilla hammer (config switch, Y opens the blueprint list with pictures, Blueprints tab in the vanilla build menu). On first start it copies the `[Smart Hammer...` sections from `com.snakesquad.snakeskills.cfg`. There is no separate Smart Hammer item. It disables itself while SmartBuild/SnakeHammer is installed. New hammer work goes here, not in the SnakeHammer repo.
 - **Hoe:** all hoe work goes in SnakeSkills' Landscaping hoe. SnakeSmarterHoe is being phased out (too many features, cluttered UI). Port only what is asked for and keep the hoe UI minimal.
 - **SnakePolearms:** latest v1.1.7, released with the SnakeWood scheme.
 - **SnakewaySurfer** (`surfsup` endless-runner minigame, client-only): latest v1.16.225, branch `claude/project-thread-8ph0gw`. Build further work there and dispatch Build to release. The `surftest` self-test tour and `surfkit` commands produce screenshots and a report folder for SAT to send back with LogOutput.log; always check the version line in the log first. Architecture work comes before new features. See §7g and the handoff doc.
